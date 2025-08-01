@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+}
+
+.food-crumb {
+  position: absolute;
+  background-color: #ffefaa;
+  border: 1px solid #d4b84a;
+  border-radius: 5px;
+  padding: 2px 5px;
+  font-family: sans-serif;
+  font-size: 14px;
+  cursor: grab;
+  z-index: 1000000;
+  user-select: none;
+}
+
+.dragged-text-placeholder {
+  display: none;
+}
