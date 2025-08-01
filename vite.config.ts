@@ -1,13 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import webExtension from "vite-plugin-web-extension";
+import { crx } from "@crxjs/vite-plugin";
+import manifest from "./manifest.ts";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    webExtension({
-      manifest: "./src/manifest.json",
-      disableAutoLaunch: true,
-    }),
-  ],
+  plugins: [react(), crx({ manifest })],
 });
