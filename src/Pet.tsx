@@ -24,6 +24,8 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [happiness, setHappiness] = useState(100);
   const [happinessAnimTarget, setHappinessAnimTarget] = useState(100);
+  const [message, setMessage] = useState<string | null>(null);
+
   const getHappinessClass = () => {
     if (happiness > 70) return "mood-happy";
     if (happiness > 30) return "mood-content";
@@ -34,9 +36,20 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
   const [movementSpeedClass, setMovementSpeedClass] = useState("walk-speed");
 
   const stateTimeoutRef = useRef<Timeout | null>(null);
+  const messageTimeoutRef = useRef<Timeout | null>(null);
   const lastInteractionRef = useRef<number>(Date.now());
-
   const dragStartPos = useRef({ x: 0, y: 0 });
+
+  const showMessage = useCallback((text: string, duration: number = 3000) => {
+    if (messageTimeoutRef.current) {
+      clearTimeout(messageTimeoutRef.current);
+    }
+    setMessage(text);
+    messageTimeoutRef.current = setTimeout(() => {
+      setMessage(null);
+      messageTimeoutRef.current = null;
+    }, duration);
+  }, []);
 
   useEffect(() => {
     const anim = animations[currentState];
@@ -69,13 +82,12 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
       });
     }, 1000);
     return () => clearInterval(happinessDecayInterval);
-  }, []);
+  }, [setIsbreakdown]);
 
   const moveToRandomPoint = useCallback(
     (speedClass: string) => {
       const newX = Math.random() * (window.innerWidth - VISUAL_PET_SIZE);
       const newY = Math.random() * (window.innerHeight - VISUAL_PET_SIZE);
-
       setIsFlipped(newX < position.x);
       setMovementSpeedClass(speedClass);
       setPosition({ x: newX, y: newY });
@@ -87,7 +99,6 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
     const stunts = ["flip", "roll", "spin", "bounce"];
     const randomStunt = stunts[Math.floor(Math.random() * stunts.length)];
     setStuntClass(randomStunt);
-
     setTimeout(() => setStuntClass(""), 800);
   }, []);
 
@@ -98,6 +109,17 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
 
     const decideNextAction = () => {
       if (currentState === "eat" || isDragging) return;
+
+      if (!message) {
+        if (happiness < 30 && Math.random() < 0.25) {
+          showMessage("No one loves me...", 4000);
+        } else if (happiness > 70 && Math.random() < 0.15) {
+          const happyMessages = ["Purrrrrr...", "Meow!", "I love this!"];
+          const randomMsg =
+            happyMessages[Math.floor(Math.random() * happyMessages.length)];
+          showMessage(randomMsg, 3000);
+        }
+      }
 
       const mood =
         happiness > 70 ? "happy" : happiness > 30 ? "content" : "sad";
@@ -158,6 +180,8 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
     isDragging,
     moveToRandomPoint,
     performRandomStunt,
+    showMessage,
+    message,
   ]);
 
   const increaseHappiness = (amount: number) => {
@@ -179,6 +203,13 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
 
     const foodCrumbId = e.dataTransfer.getData(FOOD_CRUMB_ID_TYPE);
     if (foodCrumbId) {
+      // Check for overfeeding
+      if (happiness >= 100) {
+        showMessage("I'm already full!", 3000);
+        document.getElementById(foodCrumbId)?.remove();
+        return; // Exit before increasing happiness
+      }
+
       const droppedText = e.dataTransfer.getData("text/plain");
       increaseHappiness(Math.min(Math.floor(droppedText.length / 3), 25));
       setCurrentState("eat");
@@ -195,7 +226,6 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
-
     dragStartPos.current = { x: e.clientX, y: e.clientY };
     setCurrentState("pet");
     increaseHappiness(2);
@@ -237,6 +267,9 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
+      {/* New message bubble element */}
+      {message && <div className="pet-message-bubble">{message}</div>}
+
       <div className="happiness-bar">
         <div
           className={`happiness-bar__fill ${getHappinessClass()}`}
