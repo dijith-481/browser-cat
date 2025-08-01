@@ -3,14 +3,16 @@ import type { PetState } from "./animations";
 import { PET_SIZE, animations } from "./animations";
 import "./Pet.css";
 import { FOOD_CRUMB_ID_TYPE } from "./useTextSelection";
-import { breakdown } from "./Breakdown";
 
 const PET_SCALE = 2.5;
 const VISUAL_PET_SIZE = PET_SIZE * PET_SCALE;
 
 type Timeout = ReturnType<typeof setTimeout>;
+interface PetProps {
+  setIsbreakdown: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export const Pet: React.FC = () => {
+export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
   const [currentState, setCurrentState] = useState<PetState>("idle");
   const [currentFrame, setCurrentFrame] = useState(0);
   const [position, setPosition] = useState({
@@ -55,18 +57,17 @@ export const Pet: React.FC = () => {
     console.log("useEffect");
     const happinessDecayInterval = setInterval(() => {
       const timeSinceLastInteraction = Date.now() - lastInteractionRef.current;
-      const decayRate = timeSinceLastInteraction > 30000 ? 2 : 1;
+      const decayRate = timeSinceLastInteraction > 10000 ? 2 : 1;
       setHappiness((prev) => {
         const newHappiness = Math.max(0, prev - decayRate);
         console.log(newHappiness);
-        if (newHappiness < 95) {
-          console.log("breakdown");
-          breakdown();
+        if (newHappiness == 95) {
+          setIsbreakdown(true);
         }
         setHappinessAnimTarget(newHappiness);
         return newHappiness;
       });
-    }, 5000);
+    }, 1000);
     return () => clearInterval(happinessDecayInterval);
   }, []);
 
