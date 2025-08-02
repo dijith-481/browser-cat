@@ -2,20 +2,12 @@ import { useEffect } from "react";
 export const FOOD_CRUMB_ID_TYPE = "application/x-browser-pet-food-id";
 let currentlyDraggedCrumbId: string | null = null;
 
-// Store for the original text ranges, mapping a crumb ID to its Range object.
 const rangeStore = new Map<string, Range>();
 
-/**
- * Finds the range associated with a food crumb ID and deletes its content
- * from the original document.
- * @param crumbId The ID of the food crumb that was "eaten".
- */
 export const deleteTextForCrumb = (crumbId: string) => {
   const range = rangeStore.get(crumbId);
   if (range) {
-    // This is the key step that removes the text from the page.
     range.deleteContents();
-    // Clean up the store to prevent memory leaks.
     rangeStore.delete(crumbId);
   }
 };

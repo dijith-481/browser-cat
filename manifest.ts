@@ -2,7 +2,7 @@ import { defineManifest } from "@crxjs/vite-plugin";
 
 export default defineManifest({
   manifest_version: 3,
-  name: "virtual-pet (Plugin)",
+  name: "browser-cat (Plugin)",
   version: "1.1",
   permissions: ["tabs"],
   background: {
