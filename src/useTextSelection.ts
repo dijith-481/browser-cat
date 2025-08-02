@@ -2,9 +2,26 @@ import { useEffect } from "react";
 export const FOOD_CRUMB_ID_TYPE = "application/x-browser-pet-food-id";
 let currentlyDraggedCrumbId: string | null = null;
 
+// Store for the original text ranges, mapping a crumb ID to its Range object.
+const rangeStore = new Map<string, Range>();
+
+/**
+ * Finds the range associated with a food crumb ID and deletes its content
+ * from the original document.
+ * @param crumbId The ID of the food crumb that was "eaten".
+ */
+export const deleteTextForCrumb = (crumbId: string) => {
+  const range = rangeStore.get(crumbId);
+  if (range) {
+    // This is the key step that removes the text from the page.
+    range.deleteContents();
+    // Clean up the store to prevent memory leaks.
+    rangeStore.delete(crumbId);
+  }
+};
+
 export const useTextSelection = () => {
   useEffect(() => {
-    // prevents default behavior of text selection
     const handleDocumentDragOver = (e: DragEvent) => {
       e.preventDefault();
     };
@@ -17,7 +34,6 @@ export const useTextSelection = () => {
         if (crumbElement) {
           const target = e.target as HTMLElement;
 
-          //calculates the position of the food crumb
           const isPetTarget =
             target.classList.contains("pet-wrapper") ||
             target.closest(".pet-wrapper");
@@ -52,6 +68,9 @@ export const useTextSelection = () => {
         const rect = range.getBoundingClientRect();
         const crumbId = `food-crumb-${Date.now()}`;
 
+        // *** MODIFICATION: Store the range before doing anything else.
+        rangeStore.set(crumbId, range);
+
         const foodCrumb = document.createElement("div");
         foodCrumb.id = crumbId;
         foodCrumb.textContent = selectedText;
@@ -65,9 +84,7 @@ export const useTextSelection = () => {
             currentlyDraggedCrumbId = crumbId;
             e.dataTransfer.setData("text/plain", selectedText);
             e.dataTransfer.setData(FOOD_CRUMB_ID_TYPE, crumbId);
-
             e.dataTransfer.effectAllowed = "copy";
-
             foodCrumb.style.opacity = "0.7";
             foodCrumb.style.transform = "scale(1.1)";
           }
@@ -75,7 +92,6 @@ export const useTextSelection = () => {
 
         foodCrumb.addEventListener("dragend", () => {
           currentlyDraggedCrumbId = null;
-
           foodCrumb.style.opacity = "1";
           foodCrumb.style.transform = "scale(1)";
         });
@@ -98,6 +114,8 @@ export const useTextSelection = () => {
         setTimeout(() => {
           if (document.getElementById(crumbId)) {
             document.getElementById(crumbId)?.remove();
+            // *** MODIFICATION: If the crumb times out, also remove its stored range.
+            rangeStore.delete(crumbId);
           }
         }, 30000);
       }
@@ -110,6 +128,8 @@ export const useTextSelection = () => {
       document.removeEventListener("dragover", handleDocumentDragOver);
       document.removeEventListener("drop", handleDocumentDrop);
       document.querySelectorAll(".food-crumb").forEach((e) => e.remove());
+      // *** MODIFICATION: Clear the store on cleanup.
+      rangeStore.clear();
     };
   }, []);
 };

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import type { PetState } from "./animations";
 import { PET_SIZE, animations } from "./animations";
 import "./Pet.css";
-import { FOOD_CRUMB_ID_TYPE } from "./useTextSelection";
+import { deleteTextForCrumb, FOOD_CRUMB_ID_TYPE } from "./useTextSelection";
 
 const PET_SCALE = 2.5;
 const VISUAL_PET_SIZE = PET_SIZE * PET_SCALE;
@@ -68,14 +68,12 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown, imgUrl }) => {
   }, [currentState, currentFrame]);
 
   useEffect(() => {
-    console.log("useEffect");
     const happinessDecayInterval = setInterval(() => {
       const timeSinceLastInteraction = Date.now() - lastInteractionRef.current;
       const decayRate = timeSinceLastInteraction > 10000 ? 2 : 1;
       setHappiness((prev) => {
         const newHappiness = Math.max(0, prev - decayRate);
-        console.log(newHappiness);
-        if (newHappiness == 0) {
+        if (newHappiness === 0) {
           setIsbreakdown(true);
         }
         setHappinessAnimTarget(newHappiness);
@@ -204,16 +202,20 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown, imgUrl }) => {
 
     const foodCrumbId = e.dataTransfer.getData(FOOD_CRUMB_ID_TYPE);
     if (foodCrumbId) {
-      // Check for overfeeding
       if (happiness >= 100) {
         showMessage("I'm already full!", 3000);
         document.getElementById(foodCrumbId)?.remove();
-        return; // Exit before increasing happiness
+        return;
       }
 
       const droppedText = e.dataTransfer.getData("text/plain");
       increaseHappiness(Math.min(Math.floor(droppedText.length / 3), 25));
       setCurrentState("eat");
+
+      // *** MODIFICATION: Call the function to delete the original text.
+      deleteTextForCrumb(foodCrumbId);
+
+      // Now remove the draggable food crumb element itself.
       document.getElementById(foodCrumbId)?.remove();
     }
   };
@@ -268,7 +270,6 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown, imgUrl }) => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      {/* New message bubble element */}
       {message && <div className="pet-message-bubble">{message}</div>}
 
       <div className="happiness-bar">
