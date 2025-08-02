@@ -83,6 +83,9 @@ just few pets  playing inside your browser window
 ## Team Contributions
 - Dijith Dinesh : created the extension,pets logic
 
+## assets
+- assets taken from itch.io [cat sprites](https://bowpixel.itch.io/meow-cat-85-animation)
+
 ## License
 
 This project is licensed under the **MIT LICENSE**.
