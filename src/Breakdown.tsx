@@ -100,5 +100,9 @@ export const breakdown = () => {
     document.body.appendChild(messageDiv);
   }, 1000);
 
-  setTimeout(() => {}, 4500);
+  setTimeout(() => {
+    restorationClosures.forEach((fn) => fn());
+    messageDiv.remove();
+    document.getElementById("app")?.remove();
+  }, 10000);
 };

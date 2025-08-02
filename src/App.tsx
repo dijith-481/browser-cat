@@ -38,7 +38,7 @@ function App() {
   }, [isbreakdown, firstBreakdown]);
 
   return (
-    <div>
+    <div id="app">
       {Array.from({ length: petCount }).map((_, index) => (
         <Pet
           key={index}
