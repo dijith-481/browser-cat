@@ -35,6 +35,7 @@ well even though they don't have any emotions(like your actual cat). you can pet
 - feed cats to keep browsing.
 - or your website  breaks down.
 - keep the pets healthy.
+- really useful when working with llm's  you can feed *you are absolutely right* to your pets
 
 ## Technical Details
 ### Technologies/Components Used
@@ -81,6 +82,9 @@ just few pets  playing inside your browser window
 
 ## Team Contributions
 - Dijith Dinesh : created the extension,pets logic
+
+## assets
+- assets taken from itch.io [cat sprites](https://bowpixel.itch.io/meow-cat-85-animation)
 
 ## License
 
