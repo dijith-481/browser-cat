@@ -3,6 +3,8 @@ import { useTextSelection } from "./useTextSelection";
 import { breakdown } from "./Breakdown";
 import { useEffect, useState } from "react";
 
+const catSpriteUrl = ["Cat_Ginger.png", "Cat_Grey.png", "Cat_Grey_White.png"];
+
 function App() {
   useTextSelection();
 
@@ -38,7 +40,11 @@ function App() {
   return (
     <div>
       {Array.from({ length: petCount }).map((_, index) => (
-        <Pet key={index} setIsbreakdown={setIsbreakdown} />
+        <Pet
+          key={index}
+          setIsbreakdown={setIsbreakdown}
+          imgUrl={catSpriteUrl[Math.floor(Math.random() * catSpriteUrl.length)]}
+        />
       ))}
     </div>
   );

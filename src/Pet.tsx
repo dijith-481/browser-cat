@@ -9,10 +9,11 @@ const VISUAL_PET_SIZE = PET_SIZE * PET_SCALE;
 
 type Timeout = ReturnType<typeof setTimeout>;
 interface PetProps {
+  imgUrl: string;
   setIsbreakdown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
+export const Pet: React.FC<PetProps> = ({ setIsbreakdown, imgUrl }) => {
   const [currentState, setCurrentState] = useState<PetState>("idle");
   const [currentFrame, setCurrentFrame] = useState(0);
   const [position, setPosition] = useState({
@@ -74,7 +75,7 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
       setHappiness((prev) => {
         const newHappiness = Math.max(0, prev - decayRate);
         console.log(newHappiness);
-        if (newHappiness == 95) {
+        if (newHappiness == 0) {
           setIsbreakdown(true);
         }
         setHappinessAnimTarget(newHappiness);
@@ -283,7 +284,7 @@ export const Pet: React.FC<PetProps> = ({ setIsbreakdown }) => {
         <div
           className={isHovered ? "pet-sprite drag-over" : "pet-sprite"}
           style={{
-            backgroundImage: `url('${chrome.runtime.getURL("pet-sprite.png")}')`,
+            backgroundImage: `url('${chrome.runtime.getURL(imgUrl)}')`,
             backgroundPosition,
             transform: spriteTransform,
           }}

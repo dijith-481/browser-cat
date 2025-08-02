@@ -17,7 +17,7 @@ export default defineManifest({
   ],
   web_accessible_resources: [
     {
-      resources: ["pet-sprite.png"],
+      resources: ["Cat_Ginger.png", "Cat_Grey.png", "Cat_Grey_White.png"],
       matches: ["<all_urls>"],
     },
   ],
