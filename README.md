@@ -1,69 +1,96 @@
-# React + TypeScript + Vite
+<img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Browser-cat🎯
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Basic Details
+### Team Name: dotfile
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Team Members
+- Team Lead:Dijith Dinesh - Model Engineering College
+### Project Description
+Its a browser extension that adds  some pets(cats) to yor  browser they will run, walk and play in websites you visit, you can feed them with the  text from the page itself  or pet it by dragging the pet. don't let them starve. they deserves 🎔
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### The Problem (that doesn't exist)
+People love pets even if they are useless,like cats. with the internet and rise of AI(Hell yeah more views for this page now) we don't have enough time to spent with pets(dumb thing anyway) ,atleast in our direct reach of eye.
+- felt alone while browsing web?
+- ever felt you want to eat the delicious animals(ascii) on the screen?
+- ever felt like you need a pet that never poop.
+- ever felt like you need someone to spent time with(like the girl-friend you never had).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### The Solution (that nobody asked for)
+introducing to you the browser-cat
+- cats that you love to spent time with.
+- they live along with you, inside screen,wherever you visit, to keep you company
+- cats that play  backflip run walk all over your screen.
+well even though they don't have any emotions(like your actual cat). you can pet them and give food if you wish.
+- it keeps you company,when writing stupid readme like this in the last moment,
+- it never gonna delete your entire readme  becuase you didn't feed it.(why is my words in readme fallling apart)
+- the more tabs you open you gets more pets(yeah that's a feature)
+## features(yeah)
+- number of pets equal to no of open tabs.
+- playful cute cats using sprites.
+- feed cats to keep browsing.
+- or your website  breaks down.
+- keep the pets healthy.
+
+## Technical Details
+### Technologies/Components Used
+- TypeScript
+- React
+- vite
+- gemini 2.5 pro
+- neovim
+
+
+### Implementation
+For Software:
+# Installation
+clone and cd  repo
+```bash
+npm i
+npm run dev # for dev build
+npm run build # for build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Run
+open chrome turn on dev tools in extension load the dist folder to browser
+now visit your favorite browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Project Documentation
+# Screenshots (Add at least 3)
+<img width="1905" height="1158" alt="image" src="https://github.com/user-attachments/assets/b3536a7f-0f37-48c5-ac5b-706e7d265f78" />
+see your pets inside your browser
+<img width="1905" height="1158" alt="image" src="https://github.com/user-attachments/assets/63e0d8da-ac41-4f90-b8cd-a0bd8d9c133a" />
+you can feed them with all words you don't need
+<img width="1903" height="1151" alt="image" src="https://github.com/user-attachments/assets/dd0b8433-1216-4fa4-979d-d08202a0f7b5" />
+don't let them die it will take away your website too
+<img width="1886" height="1117" alt="image" src="https://github.com/user-attachments/assets/409aac82-2578-4566-90a4-44274b981585" />
+sad
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# working
+ - service worker to count tab count ( creates cats equal to tab count)
+ - browser extension to  make it work on any websites with html elements
+
+### Project Demo
+# Video
+<video src="https://github.com/user-attachments/assets/b87918c6-7295-49c5-a061-885e4bef890d" controls></video>
+just few pets  playing inside your browser window 
+
+## Team Contributions
+- Dijith Dinesh : created the extension,pets logic
+
+## License
+
+This project is licensed under the **MIT LICENSE**.
+See the [LICENSE](LICENSE) file for details.
+
+---
+<p>made with ❤️ by <a href="https://dijith.vercel.app">dijith</a> at TinkerHub Useless Projects </p>
+
+![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
+![Static Badge](https://img.shields.io/badge/UselessProjects--25-25?link=https%3A%2F%2Fwww.tinkerhub.org%2Fevents%2FQ2Q1TQKX6Q%2FUseless%2520Projects)
+
+
