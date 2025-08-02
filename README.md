@@ -35,6 +35,7 @@ well even though they don't have any emotions(like your actual cat). you can pet
 - feed cats to keep browsing.
 - or your website  breaks down.
 - keep the pets healthy.
+- really useful when working with llm's  you can feed *you are absolutely right* to your pets
 
 ## Technical Details
 ### Technologies/Components Used
